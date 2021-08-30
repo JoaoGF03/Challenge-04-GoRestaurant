@@ -1,15 +1,8 @@
 import { FiCheckSquare } from 'react-icons/fi';
+import { useFoods } from '../../hooks/useFoods';
 import { Input } from '../Input';
 import { Modal } from '../Modal';
 import { Form } from './styles';
-
-
-interface ModalEditFoodProps {
-  isOpen: boolean;
-  setIsOpen: () => void
-  handleUpdateFood: (data: FoodDTO) => Promise<void>
-  editingFood: Record<string, any>
-}
 
 interface FoodDTO {
   id: number
@@ -20,17 +13,17 @@ interface FoodDTO {
   available: boolean
 }
 
-export function ModalEditFood(props: ModalEditFoodProps) {
-  const { isOpen, setIsOpen, editingFood, handleUpdateFood } = props;
+export function ModalEditFood() {
+  const { editModalOpen, toggleEditModal, editingFood, handleUpdateFood } = useFoods();
 
   async function handleSubmit(data: FoodDTO) {
     handleUpdateFood(data);
 
-    setIsOpen();
+    toggleEditModal();
   };
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+    <Modal isOpen={editModalOpen} setIsOpen={toggleEditModal}>
       <Form onSubmit={handleSubmit} initialData={editingFood}>
         <h1>Editar Prato</h1>
         <Input name="image" placeholder="Cole o link aqui" />

@@ -1,14 +1,10 @@
 import { FiPlusSquare } from 'react-icons/fi';
 import Logo from '../../assets/logo.svg';
+import { useFoods } from '../../hooks/useFoods';
 import { Container } from './styles';
 
-
-interface HeaderProps {
-  openModal(): void
-}
-
-export function Header(props: HeaderProps) {
-  const { openModal } = props
+export function Header() {
+  const { toggleModal } = useFoods()
 
   return (
     <Container>
@@ -18,7 +14,7 @@ export function Header(props: HeaderProps) {
           <div>
             <button
               type="button"
-              onClick={openModal}
+              onClick={toggleModal}
             >
               <div className="text">Novo Prato</div>
               <div className="icon">
