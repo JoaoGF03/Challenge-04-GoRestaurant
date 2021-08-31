@@ -1,19 +1,20 @@
 import { useField } from '@unform/core';
 import {
-  useCallback, useEffect,
+  InputHTMLAttributes, useCallback, useEffect,
   useRef,
   useState
 } from 'react';
 import { Container } from './styles';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string
+  icon?: any
 }
 
 export function Input(props: InputProps) {
-  const { name, ...rest } = props
+  const { name, icon: Icon, ...rest } = props
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -27,7 +28,7 @@ export function Input(props: InputProps) {
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
 
-    setIsFilled(!!inputRef.current);
+    setIsFilled(!!inputRef.current?.value);
   }, []);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export function Input(props: InputProps) {
 
   return (
     <Container isFocused={isFocused} isFilled={isFilled}>
-      {/* {icon && <Icon size={20} />} */}
+      {Icon && <Icon size={20} />}
 
       <input
         onFocus={handleInputFocus}

@@ -1,3 +1,5 @@
+import { FormHandles } from '@unform/core';
+import { createRef, Ref } from 'react';
 import { FiCheckSquare } from 'react-icons/fi';
 import { useFoods } from '../../hooks/useFoods';
 import { Input } from '../Input';
@@ -16,6 +18,8 @@ interface FoodDTO {
 export function ModalEditFood() {
   const { editModalOpen, toggleEditModal, editingFood, handleUpdateFood } = useFoods();
 
+  const formRef: Ref<FormHandles> = createRef()
+
   async function handleSubmit(data: FoodDTO) {
     handleUpdateFood(data);
 
@@ -24,7 +28,7 @@ export function ModalEditFood() {
 
   return (
     <Modal isOpen={editModalOpen} setIsOpen={toggleEditModal}>
-      <Form onSubmit={handleSubmit} initialData={editingFood}>
+      <Form ref={formRef} onSubmit={handleSubmit} initialData={editingFood}>
         <h1>Editar Prato</h1>
         <Input name="image" placeholder="Cole o link aqui" />
 
